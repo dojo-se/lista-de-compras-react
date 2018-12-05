@@ -8,21 +8,10 @@ import "./App.css";
 class App extends Component {
   state = {
     nome: "",
-    valor: "",
+    preco: "",
     quantidade: "",
 
-    items: [
-      {
-        nome: "item 1",
-        preco: 10,
-        quantidade: 1
-      },
-      {
-        nome: "item 2",
-        preco: 40,
-        quantidade: 3
-      }
-    ]
+    items: []
   };
 
   onChange = event => {
@@ -30,19 +19,37 @@ class App extends Component {
     this.setState({ [name]: value });
   };
 
+  addItem = () => {
+    const { nome, preco, quantidade, items } = this.state;
+    items.push({ nome, preco, quantidade });
+    this.setState({ items });
+  };
+
   render() {
     const { items } = this.state;
 
     return (
       <div>
-        <input name="nome" onChange={this.onChange} value={this.state.nome} />
-        <input name="preco" onChange={this.onChange} value={this.state.preco} />
+        <input
+          name="nome"
+          placeholder="Nome"
+          onChange={this.onChange}
+          value={this.state.nome}
+        />
+
+        <input
+          name="preco"
+          placeholder="Preço"
+          onChange={this.onChange}
+          value={this.state.preco}
+        />
         <input
           name="quantidade"
+          placeholder="Quantidade"
           onChange={this.onChange}
           value={this.state.quantidade}
         />
-        <button>Adicionar Item</button>
+        <button onClick={this.addItem}>Adicionar Item</button>
         {items.map(({ nome, preco, quantidade }, index) => (
           <ListaItem
             key={index}

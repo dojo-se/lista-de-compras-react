@@ -11,7 +11,8 @@ class App extends Component {
     preco: "",
     quantidade: "",
 
-    items: []
+    items: [],
+    total: 0
   };
 
   onChange = event => {
@@ -22,11 +23,28 @@ class App extends Component {
   addItem = () => {
     const { nome, preco, quantidade, items } = this.state;
     items.push({ nome, preco, quantidade });
-    this.setState({ items });
+    this.setState({ items, nome: "", preco: "", quantidade: "" });
+  };
+
+  calcularTotal = () => {
+    const { items } = this.state;
+    let total = 0;
+
+    items.forEach(item => (total += item.preco * item.quantidade));
+
+    return total;
+  };
+
+  removeItem = position => {
+    const { items } = this.state;
+    const newItems = items.filter((item, index) => index !== position);
+
+    this.setState({ items: newItems });
   };
 
   render() {
     const { items } = this.state;
+    const total = this.calcularTotal();
 
     return (
       <div>
@@ -53,11 +71,14 @@ class App extends Component {
         {items.map(({ nome, preco, quantidade }, index) => (
           <ListaItem
             key={index}
+            index={index}
             nome={nome}
             preco={preco}
             quantidade={quantidade}
+            removeItem={this.removeItem}
           />
         ))}
+        <div className="total">Total da compra: {total}</div>
       </div>
     );
   }

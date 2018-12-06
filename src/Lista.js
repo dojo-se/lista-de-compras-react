@@ -47,7 +47,8 @@ class App extends Component {
     const total = this.calcularTotal();
 
     return (
-      <div>
+      <div className="carrinho">
+        <div className="title">React Cart</div>
         <input
           name="nome"
           placeholder="Nome"
@@ -67,18 +68,68 @@ class App extends Component {
           onChange={this.onChange}
           value={this.state.quantidade}
         />
-        <button onClick={this.addItem}>Adicionar Item</button>
-        {items.map(({ nome, preco, quantidade }, index) => (
-          <ListaItem
-            key={index}
-            index={index}
-            nome={nome}
-            preco={preco}
-            quantidade={quantidade}
-            removeItem={this.removeItem}
-          />
-        ))}
+        <button className="add-btn" onClick={this.addItem}>
+          Adicionar Item
+        </button>
+        <ul className="lista">
+          {items.map(({ nome, preco, quantidade }, index) => (
+            <ListaItem
+              key={index}
+              index={index}
+              nome={nome}
+              preco={preco}
+              quantidade={quantidade}
+              removeItem={this.removeItem}
+            />
+          ))}
+        </ul>
         <div className="total">Total da compra: {total}</div>
+
+        <style jsx>{`
+          .title {
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 40px;
+          }
+
+          .carrinho {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 20px;
+            background-color: rebeccapurple;
+          }
+
+          .carrinho > input {
+            border: none;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+          }
+
+          .carrinho > .add-btn {
+            background-color: purple;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            margin-bottom: 15px;
+          }
+
+          .lista {
+            list-style: none;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+          }
+
+          .lista li {
+            color: #fff;
+          }
+
+          .total {
+            color: #fff;
+          }
+        `}</style>
       </div>
     );
   }
